@@ -29,6 +29,28 @@ function createUsuarioRepository(novoUsuario) {
     });
 }
 
+function findUsuarioByEmailRepository(email) {
+    return new Promise((resolve, reject) => {
+        db.get(
+            `
+                SELECT 
+                    id, username, email 
+                FROM usuarios
+                WHERE email = ?
+            `,
+            [email],
+            (err, row) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(row);
+                }
+            }                
+        );
+    });
+}
+
 export default {
-    createUsuarioRepository
+    createUsuarioRepository,
+    findUsuarioByEmailRepository
 }
